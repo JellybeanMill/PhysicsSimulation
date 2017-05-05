@@ -11,7 +11,8 @@ public void setup()
 }
 public void keyPressed()
 {
-	if(key=1){}
+	if(key=1){key1=true;}
+	if(key=2){key2=true;}
 }
 public void draw()
 {
@@ -34,12 +35,19 @@ public class Cursor
 	{
 		cursorType=0;
 	}
-	public void setCursorType(int input){cursorType = input;}
-	public void show()
+	public void cTick()
+	{
+		if(key1=true){cursorType=0;}
+		if(key2=true){cursorType=1;}
+	}
+	public void cShow()
 	{
 		if(cursorType==1)
 		{
-
+			fill(255);
+			rect(mouseX-25,mouseY-25,50,50);
+			fill(0);
+			rect(mouseX-25,mouseY-5,50,10);
 		}
 	}
 	public void mouseClicked()
