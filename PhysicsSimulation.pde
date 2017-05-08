@@ -1,4 +1,5 @@
 Cursor cursorMain;
+CircuitBox [][] circuitGrid;
 boolean key1 = false;
 boolean key2 = false;
 boolean key3 = false;
@@ -9,12 +10,19 @@ public void setup()
 {
 	size(1000,600);
 	cursorMain = new Cursor();
+	circuitGrid = new CircuitBox[20][12];
+	for(int i=0;i<20;i++)
+	{
+		for(int j=0;j<12;j++)
+		{
+			circuitGrid[i][j] = new EmptyCir(i,j);
+		}
+	}
 }
 public void keyPressed()
 {
-	if(key=='1'){cursorMain.setCursorType(0);
-		System.out.println("Pressed 1");}
-	if(key=='2'){cursorMain.setCursorType(1);System.out.println("Pressed 1");}
+	if(key=='1'){cursorMain.setCursorType(0);}
+	if(key=='2'){cursorMain.setCursorType(1);}
 }
 public void draw()
 {
@@ -29,7 +37,14 @@ public void draw()
 		stroke(169,169,169);
 		line(-10,i,1010,i);
 	}
-	cursorMain.cShow();
+	for(CircuitBox [] row : circuitGrid)
+	{
+		for(CircuitBox blankCir : row)
+		{
+			blankCir.show();
+		}
+	}
+	cursorMain.show();
 }
 public class Cursor
 {
@@ -39,11 +54,9 @@ public class Cursor
 		cursorType=0;
 	}
 	public void setCursorType(int input){cursorType=input;}
-	public void cTick()
-	{}
-	public void cShow()
+	public int getCursorType(){return cursorType;}
+	public void show()
 	{
-		cTick();
 		if(cursorType==1)
 		{
 			fill(255);
@@ -54,38 +67,52 @@ public class Cursor
 	}
 	public void mouseClicked()
 	{
-		if(cursorType==0)
-		{
+		circuitGrid[(int)(mouseX/20)][(int)(mouseY/20)].beenClicked();
+	}
+}
+public interface CircuitBox
+{
+	public void beenClicked();
+	public void show();
+}
+public class Circuit implements CircuitBox
+{
+	private int myX, myY;
+	public Circuit(int x,int y)
+	{
+		myX = x;
+		myY = y;
+	}
+	public void beenClicked()
+	{
 
+	}
+	public void show()
+	{
+			fill(255);
+			rect(myX*50,myY*50,50,50);
+			fill(0);
+			rect(myX*50,(myY*50)+20,50,10);
+	}
+}
+public class EmptyCir implements CircuitBox
+{
+	private int myX, myY;
+	public EmptyCir(int x, int y)
+	{
+		myX = x;
+		myY = y;
+	}
+	public void beenClicked()
+	{
+		if(cursorMain.getCursorType()==1)
+		{
+			circuitGrid[myX][myY] = new Circuit(myX,myY);
 		}
 	}
-}
-public interface CirciutBox
-{
-	public void MouseClicked(){}
-	public void makeDisplay(){}
-	public boolean checkCircuitry(){}
-}
-public class Circuit
-{
-
-	public Circuit()
+	public void show()
 	{
-
-	}
-	public void makeDisplay()
-	{
-	}
-	public boolean checkCircuitryNeg()
-	{
-
-	}
-}
-public class Position //BE WARY OF CONFLICT WITH PROCESSING.JS
-{
-	
-	public Position(int inputX, int inputY)
-	{
-
-	}
+		fill(255,0,0);
+		rect(myX*50,myY*50,10,10);
+	};
 }
