@@ -53,7 +53,6 @@ public void draw()
 		stroke(169,169,169);
 		line(-10,i,1010,i);
 	}
-	cursorMain.show();
 	for(CircuitBox [] row : circuitGrid)
 	{
 		for(CircuitBox blankCir : row)
@@ -61,6 +60,11 @@ public void draw()
 			blankCir.show();
 		}
 	}
+	cursorMain.show();
+}
+public void mouseClicked()
+{
+	circuitGrid[(int)(mouseX/50)][(int)(mouseY/50)].beenClicked();
 }
 public class Cursor
 {
@@ -81,10 +85,6 @@ public class Cursor
 			rect(mouseX-25,mouseY-5,50,10);
 		}
 	}
-	public void mouseClicked()
-	{
-		circuitGrid[(int)(mouseX/20)][(int)(mouseY/20)].beenClicked();
-	}
 }
 public interface CircuitBox
 {
@@ -103,12 +103,15 @@ public class Circuit implements CircuitBox
 	{
 
 	}
+	public void showline()
+	{
+	}
 	public void show()
 	{
-			fill(255);
-			rect(myX*50,myY*50,50,50);
-			fill(0);
-			rect(myX*50,(myY*50)+20,50,10);
+		fill(255);
+		rect(myX*50,myY*50,50,50);
+		fill(0);
+		rect(myX*50,(myY*50)+20,50,10);
 	}
 }
 public class EmptyCir implements CircuitBox
@@ -121,9 +124,11 @@ public class EmptyCir implements CircuitBox
 	}
 	public void beenClicked()
 	{
+		println("Ran 1");
 		if(cursorMain.getCursorType()==1)
 		{
 			circuitGrid[myX][myY] = new Circuit(myX,myY);
+			println("ran 2");
 		}
 	}
 	public void show()
