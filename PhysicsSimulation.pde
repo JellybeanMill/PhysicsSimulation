@@ -114,8 +114,5 @@ public class EmptyCir implements CircuitBox
 		}
 	}
 	public void show()
-	{
-		fill(255,0,0);
-		rect(myX*50,myY*50,10,10);
-	};
+	{};
 }

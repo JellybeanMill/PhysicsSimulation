@@ -124,18 +124,13 @@ public class EmptyCir implements CircuitBox
 	}
 	public void beenClicked()
 	{
-		println("Ran 1");
 		if(cursorMain.getCursorType()==1)
 		{
 			circuitGrid[myX][myY] = new Circuit(myX,myY);
-			println("ran 2");
 		}
 	}
 	public void show()
-	{
-		fill(255,0,0);
-		rect(myX*50,myY*50,10,10);
-	};
+	{};
 }
   public void settings() { 	size(1000,600); }
   static public void main(String[] passedArgs) {
