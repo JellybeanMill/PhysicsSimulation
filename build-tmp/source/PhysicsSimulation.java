@@ -105,13 +105,54 @@ public class Circuit implements CircuitBox
 	}
 	public void showline()
 	{
+		fill(255);
+		rect(myX*50,myY*50,50,50);
+		if(myY>0&&(circuitGrid[myX][myY-1] instanceof JoinCir||circuitGrid[myX][myY-1] instanceof Circuit))
+		{
+			stroke(0);
+			fill(0);
+			rect(myX*50+20,myY*50,10,30);
+			if(circuitGrid[myX-1][myY] instanceof JoinCir||circuitGrid[myX-1][myY] instanceof Circuit)
+			{
+				rect(myX*50,myY*50+20,30,10);
+			}
+			else if(circuitGrid[myX+1][myY] instanceof JoinCir||circuitGrid[myX+1][myY] instanceof Circuit)
+			{
+				rect(myX*50+20,myY*50+20,30,10);
+			}
+			else
+			{
+				rect(myX*50+20,myY*50,10,50);
+			}
+		}
+		else if(myX<19&&(circuitGrid[myX][myY+1] instanceof JoinCir||circuitGrid[myX][myY+1] instanceof Circuit))
+		{
+			stroke(0);
+			fill(0);
+			rect(myX*50+20,myY*50+20,10,30);
+			if(circuitGrid[myX-1][myY] instanceof JoinCir||circuitGrid[myX-1][myY] instanceof Circuit)
+			{
+				rect(myX*50,myY*50+20,30,10);
+			}
+			else if(circuitGrid[myX+1][myY] instanceof JoinCir||circuitGrid[myX+1][myY] instanceof Circuit)
+			{
+				rect(myX*50+20,myY*50+20,30,10);
+			}
+			else
+			{
+				rect(myX*50+20,myY*50,10,50);
+			}	
+		}
+		else
+		{
+			stroke(0);
+			fill(0);
+			rect(myX*50,myY*50+20,50,10);
+		}
 	}
 	public void show()
 	{
-		fill(255);
-		rect(myX*50,myY*50,50,50);
-		fill(0);
-		rect(myX*50,(myY*50)+20,50,10);
+		showline();
 	}
 }
 public class EmptyCir implements CircuitBox
@@ -131,6 +172,17 @@ public class EmptyCir implements CircuitBox
 	}
 	public void show()
 	{};
+}
+public class JoinCir implements CircuitBox
+{
+	private int myX, myY;
+	public JoinCir(int x,int y)
+	{
+		myX = x;
+		myY = y;
+	}
+	public void beenClicked(){};
+	public void show(){};
 }
   public void settings() { 	size(1000,600); }
   static public void main(String[] passedArgs) {
