@@ -34,6 +34,8 @@ public void setup()
 			circuitGrid[i][j] = new EmptyCir(i,j);
 		}
 	}
+	circuitGrid[0][1] = new Battery(0,1);
+	circuitGrid[19][10] = new Battery(19,10);
 }
 public void keyPressed()
 {
@@ -45,14 +47,14 @@ public void keyPressed()
 public void draw()
 {
 	background(0);
+	stroke(169,169,169);
+	strokeWeight(1);
 	for(int i=50;i<1000;i+=50)
 	{
-		stroke(169,169,169);
 		line(i,-10,i,610);
 	}
 	for(int i=50;i<600;i+=50)
 	{
-		stroke(169,169,169);
 		line(-10,i,1010,i);
 	}
 	for(CircuitBox [] row : circuitGrid)
@@ -125,16 +127,16 @@ public class Circuit implements CircuitBox
 	{
 		fill(255);
 		rect(myX*50,myY*50,50,50);
-		if(myY>0&&(circuitGrid[myX][myY-1] instanceof JoinCir||circuitGrid[myX][myY-1] instanceof Circuit))
+		if(myY>0&&!(circuitGrid[myX][myY-1] instanceof EmptyCir))
 		{
 			stroke(0);
 			fill(0);
 			rect(myX*50+20,myY*50,10,30);
-			if(myX>0&&(circuitGrid[myX-1][myY] instanceof JoinCir||circuitGrid[myX-1][myY] instanceof Circuit))
+			if(myX>0&&!(circuitGrid[myX-1][myY] instanceof EmptyCir))
 			{
 				rect(myX*50,myY*50+20,30,10);
 			}
-			else if(myX<19&&(circuitGrid[myX+1][myY] instanceof JoinCir||circuitGrid[myX+1][myY] instanceof Circuit))
+			else if(myX<19&&!(circuitGrid[myX+1][myY] instanceof EmptyCir))
 			{
 				rect(myX*50+20,myY*50+20,30,10);
 			}
@@ -143,16 +145,16 @@ public class Circuit implements CircuitBox
 				rect(myX*50+20,myY*50,10,50);
 			}
 		}
-		else if(myY<11&&(circuitGrid[myX][myY+1] instanceof JoinCir||circuitGrid[myX][myY+1] instanceof Circuit))
+		else if(myY<11&&!(circuitGrid[myX][myY+1] instanceof EmptyCir))
 		{
 			stroke(0);
 			fill(0);
 			rect(myX*50+20,myY*50+20,10,30);
-			if(myX>0&&(circuitGrid[myX-1][myY] instanceof JoinCir||circuitGrid[myX-1][myY] instanceof Circuit))
+			if(myX>0&&!(circuitGrid[myX-1][myY] instanceof EmptyCir))
 			{
 				rect(myX*50,myY*50+20,30,10);
 			}
-			else if(myX<19&&(circuitGrid[myX+1][myY] instanceof JoinCir||circuitGrid[myX+1][myY] instanceof Circuit))
+			else if(myX<19&&!(circuitGrid[myX+1][myY] instanceof EmptyCir))
 			{
 				rect(myX*50+20,myY*50+20,30,10);
 			}
@@ -228,6 +230,45 @@ public class JoinCir implements CircuitBox
 		}
 	}
 	public void show(){showline();}
+}
+public class Battery implements CircuitBox
+{
+	private int myX, myY;
+	public Battery(int x, int y)
+	{
+		myX = x;
+		myY = y;
+	}
+	public void beenClicked()
+	{
+	}
+	public void show()
+	{
+		strokeWeight(1);
+		fill(255);
+		rect(myX*50,myY*50,50,50);
+		noFill();
+		stroke(0);
+		strokeWeight(10);
+		ellipse(myX*50+25,myY*50+25,30,30);
+		strokeWeight(1);
+	}
+}
+public class Resistor implements CircuitBox
+{
+	private int myX, myY;
+	public Resistor(int x, int y)
+	{
+		myX = x;
+		myY = y;
+	}
+	public void beenClicked(){};
+	public void show(){};
+}
+public class Path
+{
+	public Path()
+	{}
 }
   public void settings() { 	size(1000,600); }
   static public void main(String[] passedArgs) {
