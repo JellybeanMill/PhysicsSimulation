@@ -35,7 +35,7 @@ public void setup()
 		}
 	}
 	circuitGrid[0][1] = new Battery(0,1);
-	circuitGrid[19][10] = new Battery(19,10);
+	circuitGrid[19][11] = new Battery(19,11);
 }
 public void keyPressed()
 {
@@ -69,6 +69,13 @@ public void draw()
 public void mouseClicked()
 {
 	circuitGrid[(int)(mouseX/50)][(int)(mouseY/50)].beenClicked();
+}
+public int intResCount()
+{
+	int frdirection;
+	if(!(circuitGrid[1][0] instanceof EmptyCir)){frdirection=3;}
+	Path mainPath = new Path(0,0);
+	return mainPath.getTotRes();
 }
 public class Cursor
 {
@@ -260,11 +267,12 @@ public class Battery implements CircuitBox
 }
 public class Resistor implements CircuitBox
 {
-	private int myX, myY;
+	private int myX, myY, resistance;
 	public Resistor(int x, int y)
 	{
 		myX = x;
 		myY = y;
+		resistance = 1;
 	}
 	public void beenClicked(){};
 	public void show()
@@ -277,8 +285,19 @@ public class Resistor implements CircuitBox
 }
 public class Path
 {
-	public Path()
-	{}
+	int startX, startY, frdirection, totRes;
+	public Path(int x, int y, int direct)
+	{
+		startX = x;
+		startY = y;
+		frdirection = direct;
+		totRes = 0;
+	}
+	public int getTotRes(){return totRes;}
+	public void think()
+	{
+
+	}
 }
   public void settings() { 	size(1000,600); }
   static public void main(String[] passedArgs) {
