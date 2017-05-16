@@ -82,11 +82,11 @@ public class Cursor
 			rect(mouseX-5,mouseY-25,10,30);
 		}
 		else if (cursorType==3)
-		{
+		{		
 			fill(255);
 			rect(mouseX-25,mouseY-25,50,50);
 			fill(0);
-
+			ellipse(mouseX,mouseY,35,35);
 		}
 	}
 }
@@ -177,6 +177,10 @@ public class EmptyCir implements CircuitBox
 		{
 			circuitGrid[myX][myY] = new JoinCir(myX,myY);
 		}
+		else if(cursorMain.getCursorType()==3)
+		{
+			circuitGrid[myX][myY] = new Resistor(myX,myY);
+		}
 	}
 	public void show()
 	{};
@@ -196,19 +200,19 @@ public class JoinCir implements CircuitBox
 		rect(myX*50,myY*50,50,50);
 		stroke(0);
 		fill(0);
-		if(myY>0&&(circuitGrid[myX][myY-1] instanceof JoinCir||circuitGrid[myX][myY-1] instanceof Circuit))
+		if(myY>0&&!(circuitGrid[myX][myY-1] instanceof EmptyCir))
 		{
 			rect(myX*50+20,myY*50,10,30);
 		}
-		if(myY<11&&(circuitGrid[myX][myY+1] instanceof JoinCir||circuitGrid[myX][myY+1] instanceof Circuit))
+		if(myY<11&&!(circuitGrid[myX][myY+1] instanceof EmptyCir))
 		{
 			rect(myX*50+20,myY*50+20,10,30);
 		}
-		if(myX>0&&(circuitGrid[myX-1][myY] instanceof JoinCir||circuitGrid[myX-1][myY] instanceof Circuit))
+		if(myX>0&&!(circuitGrid[myX-1][myY] instanceof EmptyCir))
 		{
 			rect(myX*50,myY*50+20,30,10);
 		}
-		if(myX<19&&(circuitGrid[myX+1][myY] instanceof JoinCir||circuitGrid[myX+1][myY] instanceof Circuit))
+		if(myX<19&&!(circuitGrid[myX+1][myY] instanceof EmptyCir))
 		{
 			rect(myX*50+20,myY*50+20,30,10);
 		}
@@ -247,10 +251,20 @@ public class Resistor implements CircuitBox
 		myY = y;
 	}
 	public void beenClicked(){};
-	public void show(){};
+	public void show()
+	{
+		fill(255);
+		rect(myX*50,myY*50,50,50);
+		fill(0);
+		ellipse(myX*50+25,myY*50+25,35,35);
+	};
 }
 public class Path
 {
-	public Path()
-	{}
+	public Path(int x, int y)
+	{
+		startX = x;
+		startY = y;
+	}
+
 }
